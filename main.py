@@ -1,4 +1,5 @@
 from collections import UserDict
+from datetime import datetime
 
 class Field:
     required = False
@@ -7,6 +8,15 @@ class Field:
 
     def __str__(self):  
         return str(self.value)
+    
+class Birthday(Field):
+    def __init__(self, value):
+        try:
+            # Specify the date format as DD.MM.YYYY
+            datetime.strptime(value, '%d.%m.%Y')
+            super().__init__(value)
+        except ValueError:
+            raise ValueError("Wrong date format")
 
 class Name(Field):
     required = True
