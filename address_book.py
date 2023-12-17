@@ -1,6 +1,7 @@
 from collections import UserDict
 from datetime import datetime
 from record import Record
+from copy import deepcopy
 
 class AddressBook(UserDict):
     WEEK_DAYS_BY_NUMBERS = {
@@ -45,3 +46,10 @@ class AddressBook(UserDict):
                     next_week_birthdays_by_weekday[weekday_name].append(name)
 
         return next_week_birthdays_by_weekday
+    
+    def __deepcopy__(self,memo):
+        copy_object = AddressBook()
+        memo[id(copy_object)] = copy_object
+        copy_object.data = deepcopy(self.data, memo)
+        return copy_object
+

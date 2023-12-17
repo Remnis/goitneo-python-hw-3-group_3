@@ -1,4 +1,4 @@
-from commands import add_contact, change_contact, show_phone, show_all, add_birthday, show_birthday, birthdays
+from commands import add_contact, change_contact, show_phone, show_all, add_birthday, show_birthday, birthdays, save_contacts, load_contacts
 from address_book import AddressBook
 
 
@@ -13,6 +13,8 @@ MENU:
 # show-birthday [name]: show birthday of contact
 # birthdays: show upcoming birthdays
 # menu: show menu
+# save-contacts: save all contacts
+# load-contacts: load all contacts
 # exit|close: exit from program
 """
 
@@ -60,6 +62,12 @@ def main():
 
         elif command == 'birthdays':
             print(birthdays(book))
+        
+        elif command == 'save-contacts':
+            print(save_contacts(book))
+        
+        elif command == 'load-contacts':
+            print(load_contacts(book))
 
         else:
             print("Invalid command.")

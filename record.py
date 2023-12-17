@@ -1,4 +1,5 @@
 from fields import Name, Phone, Birthday
+from copy import deepcopy
 
 class Record:
     def __init__(self, name):
@@ -45,4 +46,12 @@ class Record:
         return f"Contact name: {self.name.value}, Phones: {phones_str}{birthday_str}"
 
     def get_name(self):
-        return self.name.value
+        return self.name.value    
+
+    def __deepcopy__(self, memo):
+        copy_object = Record()
+        memo[id(copy_object)] = copy_object
+        copy_object.name = deepcopy(self.name, memo)
+        copy_object.phones = deepcopy(self.phones, memo)
+        copy_object.birthday = deepcopy(self.birthday, memo)
+        return copy_object

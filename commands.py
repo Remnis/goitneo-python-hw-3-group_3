@@ -1,5 +1,6 @@
 from address_book import AddressBook
 from record import Record
+import pickle
 
 def input_error(func):
     def wrapper(*args, **kwargs):
@@ -85,3 +86,18 @@ def birthdays(book):
         if names:
             result += f"{day}: {', '.join(names)}\n"
     return result if result else "No birthdays in the next week."
+
+@input_error
+def save_contacts(book):
+    with open('book_record', 'wb') as fh:
+        encoded_book = pickle.dumps(book)
+        fh.write(encoded_book)
+        return f"{len(book.data)} contacts recorded successfully"
+
+@input_error
+def load_contacts(book):
+    with open('book_record', 'rb') as fh:
+        restored_data = pickle.load(fh)
+        book.data = restored_data.data
+
+        return f"Restored {len(book.data)} contacts from archive"

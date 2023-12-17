@@ -1,4 +1,6 @@
 from datetime import datetime
+from copy import deepcopy
+
 
 class Field:
     def __init__(self, value):
@@ -6,6 +8,13 @@ class Field:
 
     def __str__(self):  
         return str(self.value)
+    
+    def __deepcopy__(self, memo):
+        copy_object = Field()
+        memo[id(self)] = copy_object
+        copy_object.value = deepcopy(self.value, memo)
+        return copy_object
+    
     
 class Birthday(Field):
     def __init__(self, value):
